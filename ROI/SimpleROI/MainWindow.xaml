@@ -1,0 +1,75 @@
+<Window x:Class="SimpleROI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SimpleROI"
+        mc:Ignorable="d"
+        Title="SimpleROI - Ví dụ mẫu chọn vùng quan tâm trên ảnh"
+        Height="650" Width="1000"
+        Background="#121218"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <!-- Thanh nút thao tác -->
+            <RowDefinition Height="Auto" />
+            <!-- Khung hình chính -->
+            <RowDefinition Height="*" />
+            <!-- Bảng thông số tọa độ và kết quả cắt ảnh -->
+            <RowDefinition Height="120" />
+        </Grid.RowDefinitions>
+
+        <!-- 1. Thanh thao tác trên cùng -->
+        <Border Grid.Row="0" Background="#1E1E28" CornerRadius="6" Padding="10,8" Margin="0,0,0,10">
+            <DockPanel LastChildFill="False">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Button Content="📂 Mở file ảnh..." Click="BtnOpenImage_Click" Padding="12,5" Margin="0,0,8,0" FontWeight="SemiBold" />
+                    <Button Content="⚡ Tạo ảnh mẫu" Click="BtnSampleImage_Click" Padding="12,5" Margin="0,0,8,0" FontWeight="SemiBold" />
+                    <Button Content="🎯 Toàn màn hình" Click="BtnFullRoi_Click" Padding="10,5" Margin="0,0,8,0" />
+                    <Button Content="❌ Xóa ROI" Click="BtnClearRoi_Click" Padding="10,5" Margin="0,0,8,0" />
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                    <Button Content="✂️ Cắt ảnh ROI ngay" Click="BtnCropRoi_Click" Padding="14,5" Background="#00C853" Foreground="White" FontWeight="Bold" />
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <!-- 2. Điều khiển SimpleRoiControl nằm ở giữa -->
+        <Border Grid.Row="1" Background="#181820" BorderBrush="#333344" BorderThickness="1" CornerRadius="6" ClipToBounds="True">
+            <local:SimpleRoiControl x:Name="RoiCtrl"
+                                    RoiChanged="RoiCtrl_RoiChanged" />
+        </Border>
+
+        <!-- 3. Bảng hiển thị thông số và ảnh cắt -->
+        <Border Grid.Row="2" Background="#1E1E28" CornerRadius="6" Padding="12,8" Margin="0,10,0,0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <!-- Thông tin tọa độ -->
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <!-- Ảnh cắt xem trước -->
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Cột trái: Tọa độ Pixel -->
+                <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                    <TextBlock Text="THÔNG SỐ VÙNG ROI (PIXEL GỐC)" FontWeight="Bold" Foreground="#38BDF8" FontSize="12" Margin="0,0,0,6" />
+                    <TextBlock x:Name="TxtCoordinates" Text="Tọa độ: X=0, Y=0, W=0, H=0" Foreground="#EEEEEE" FontSize="13" FontFamily="Consolas, Segoe UI" Margin="0,0,0,4" />
+                    <TextBlock x:Name="TxtExtraInfo" Text="Diện tích: 0 px² | Hướng dẫn: Kéo chuột để vẽ, kéo giữa khung để di chuyển, kéo 8 góc để co giãn." Foreground="#9999AA" FontSize="11" />
+                </StackPanel>
+
+                <Separator Grid.Column="1" Style="{x:Null}" Width="1" Background="#333344" Margin="16,4" />
+
+                <!-- Cột phải: Xem trước ảnh cắt -->
+                <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Ảnh cắt (Preview):" Foreground="#9999AA" FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,4" />
+                    <Border Background="#101014" BorderBrush="#444455" BorderThickness="1" CornerRadius="4" Width="130" Height="70">
+                        <Image x:Name="ImgCropPreview" Stretch="Uniform" />
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

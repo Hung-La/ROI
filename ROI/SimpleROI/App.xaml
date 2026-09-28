@@ -1,0 +1,18 @@
+<Application x:Class="SimpleROI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SimpleROI"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!-- Style nút bấm cơ bản, giao diện tối -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#2D2D3A" />
+            <Setter Property="Foreground" Value="#F0F0F0" />
+            <Setter Property="BorderBrush" Value="#444455" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="10,4" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </Application.Resources>
+</Application>

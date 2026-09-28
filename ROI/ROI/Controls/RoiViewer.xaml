@@ -1,0 +1,99 @@
+<UserControl x:Class="ROI.Controls.RoiViewer"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="600"
+             Focusable="True"
+             ClipToBounds="True">
+    
+    <Grid x:Name="RootGrid" Background="#18181B">
+        <!-- Background grid pattern for empty or letterbox area -->
+        <Border BorderBrush="#27272A" BorderThickness="1" />
+
+        <!-- Display Image -->
+        <Image x:Name="DisplayImage"
+               Stretch="Uniform"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"
+               RenderOptions.BitmapScalingMode="HighQuality" />
+
+        <!-- Overlay Canvas for ROI and Dim Mask -->
+        <Canvas x:Name="OverlayCanvas"
+                Background="Transparent"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ClipToBounds="True">
+
+            <!-- Dimmed background outside ROI -->
+            <Path x:Name="DimmedMaskPath"
+                  Fill="#75000000"
+                  IsHitTestVisible="False">
+                <Path.Data>
+                    <GeometryGroup FillRule="EvenOdd">
+                        <RectangleGeometry x:Name="ImageBoundsGeometry" />
+                        <RectangleGeometry x:Name="RoiBoundsGeometry" />
+                    </GeometryGroup>
+                </Path.Data>
+            </Path>
+
+            <!-- ROI Selection Box -->
+            <Rectangle x:Name="RoiBorderElement"
+                       Stroke="#00E676"
+                       StrokeThickness="2"
+                       StrokeDashArray="4 2"
+                       Fill="#2000E676"
+                       Cursor="SizeAll" />
+
+            <!-- Center crosshair inside ROI -->
+            <Line x:Name="CenterHLine" Stroke="#8000E676" StrokeThickness="1" StrokeDashArray="2 2" IsHitTestVisible="False" />
+            <Line x:Name="CenterVLine" Stroke="#8000E676" StrokeThickness="1" StrokeDashArray="2 2" IsHitTestVisible="False" />
+
+            <!-- 8 Resize Handles -->
+            <!-- Top-Left -->
+            <Rectangle x:Name="HandleNW" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNWSE" />
+            <!-- Top-Center -->
+            <Rectangle x:Name="HandleN" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNS" />
+            <!-- Top-Right -->
+            <Rectangle x:Name="HandleNE" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNESW" />
+            <!-- Middle-Right -->
+            <Rectangle x:Name="HandleE" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeWE" />
+            <!-- Bottom-Right -->
+            <Rectangle x:Name="HandleSE" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNWSE" />
+            <!-- Bottom-Center -->
+            <Rectangle x:Name="HandleS" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNS" />
+            <!-- Bottom-Left -->
+            <Rectangle x:Name="HandleSW" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeNESW" />
+            <!-- Middle-Left -->
+            <Rectangle x:Name="HandleW" Width="10" Height="10" Fill="White" Stroke="#00E676" StrokeThickness="1.5" Cursor="SizeWE" />
+
+            <!-- Coordinate / Dimension Badge -->
+            <Border x:Name="CoordBadge"
+                    Background="#E618181B"
+                    BorderBrush="#52525B"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="6,3"
+                    IsHitTestVisible="False">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="CoordText"
+                               Foreground="#F4F4F5"
+                               FontSize="11"
+                               FontFamily="Segoe UI Semibold, Consolas, sans-serif"
+                               Text="ROI: X=0, Y=0 (0x0)" />
+                </StackPanel>
+            </Border>
+        </Canvas>
+
+        <!-- Placeholder when no image is loaded -->
+        <StackPanel x:Name="PlaceholderPanel"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsHitTestVisible="False">
+            <TextBlock Text="🖼️" FontSize="48" HorizontalAlignment="Center" Margin="0,0,0,8" />
+            <TextBlock Text="Chưa có hình ảnh" FontSize="16" FontWeight="SemiBold" Foreground="#A1A1AA" HorizontalAlignment="Center" />
+            <TextBlock Text="Mở file ảnh hoặc tạo ảnh mẫu để bắt đầu chọn ROI" FontSize="12" Foreground="#71717A" HorizontalAlignment="Center" Margin="0,4,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

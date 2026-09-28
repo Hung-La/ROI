@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="ROI/ROI.csproj" />
+  <Project Path="SimpleROI/SimpleROI.csproj" />
+</Solution>
